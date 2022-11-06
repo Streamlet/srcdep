@@ -9,6 +9,7 @@ ALGORITHM_MAP = {
     dep_def.SHA512: hashlib.sha512,
 }
 
+
 def verify(file, algo, hash):
     digest = ALGORITHM_MAP[algo]()
     with open(file, 'rb') as f:

@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 DEPS = 'DEPS'
 GIT_REPOSITORY = 'GIT_REPOSITORY'
@@ -7,6 +7,8 @@ URL = 'URL'
 URL_FORMAT = 'URL_FORMAT'
 TAR_GZ = 'tar.gz'
 TAR_BZ2 = 'tar.bz2'
+if sys.version >= '3':
+    TAR_XZ = 'tar.xz'
 ZIP = 'zip'
 URL_HASH = 'URL_HASH'
 MD5 = 'MD5'
@@ -17,6 +19,7 @@ SHA384 = 'SHA384'
 SHA512 = 'SHA512'
 ROOT_DIR = 'ROOT_DIR'
 
+
 def dict_to_object(dict):
     assert DEPS in dict, 'Root element MUST be "%s"' % DEPS
     deps = []
@@ -24,8 +27,10 @@ def dict_to_object(dict):
         deps.append(Dep.new(path, dict[DEPS][path]))
     return deps
 
+
 class Dep(object):
     PATH = None
+
     def __init__(self, path):
         self.PATH = path.replace('/', os.path.sep).replace('\\', os.path.sep)
 
@@ -35,11 +40,13 @@ class Dep(object):
             return GitDep(path, config)
         if URL in config:
             return UrlDep(path, config)
-        assert False, 'Unsupported dependent type. You MUST specify "%s" or "%s".' % (GIT_REPOSITORY, URL)
+        assert False, 'Unsupported dependent type. You MUST specify "%s" or "%s".' % (
+            GIT_REPOSITORY, URL)
+
 
 class GitDep(Dep):
     GIT_REPO = None
-    GIT_TAG  = None
+    GIT_TAG = None
 
     def __init__(self, path, config):
         super(GitDep, self).__init__(path)
@@ -52,7 +59,7 @@ class GitDep(Dep):
 class UrlDep(Dep):
     URL = None
     URL_FORMAT = None
-    URL_HASH  = []
+    URL_HASH = []
     ROOT_DIR = None
 
     def __init__(self, path, config):
@@ -67,13 +74,16 @@ class UrlDep(Dep):
                 ext_name = 'tar.' + filename_part[-1]
             else:
                 ext_name = filename_part[-1]
-            assert ext_name in [ TAR_GZ, TAR_BZ2, ZIP ], 'Supported formats are: %s, %s, %s' % (TAR_GZ, TAR_BZ2, ZIP)
+            assert ext_name in [
+                TAR_GZ, TAR_BZ2, ZIP
+            ], 'Supported formats are: %s, %s, %s' % (TAR_GZ, TAR_BZ2, ZIP)
             self.URL_FORMAT = ext_name
         if URL_HASH in config:
             for algo in config[URL_HASH]:
                 self.URL_HASH.append(UrlHash(algo, config[URL_HASH][algo]))
         if ROOT_DIR in config:
             self.ROOT_DIR = config[ROOT_DIR]
+
 
 class UrlHash(object):
     ALGORITHM = None
@@ -82,4 +92,3 @@ class UrlHash(object):
     def __init__(self, algo, hash):
         self.ALGORITHM = algo
         self.HASH = hash
-

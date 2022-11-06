@@ -1,4 +1,7 @@
-import config.dep_def, git_dep_updater, url_dep_updater
+import config.dep_def
+from . import git_dep_updater
+from . import url_dep_updater
+
 
 def update_deps(args, dir, deps):
     for dep in deps:
@@ -9,4 +12,3 @@ def update_deps(args, dir, deps):
             url_dep_updater.UrlDepUpdater.update(args, dir, dep)
         else:
             assert False
-

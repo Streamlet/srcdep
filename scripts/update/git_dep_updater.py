@@ -1,6 +1,8 @@
 import os, subprocess, shutil
 
+
 class GitDepUpdater(object):
+
     @staticmethod
     def update(args, dir, dep):
         dest = os.path.join(dir, dep.PATH)
@@ -11,7 +13,7 @@ class GitDepUpdater(object):
             else:
                 print("%s exists, skip" % dest)
                 return True
-        if not cmd('git clone %s %s' %(dep.GIT_REPO, dest)):
+        if not cmd('git clone %s %s' % (dep.GIT_REPO, dest)):
             return False
         os.chdir(dest)
         if not cmd('git checkout %s --detach' % dep.GIT_TAG):
@@ -22,7 +24,10 @@ class GitDepUpdater(object):
 
 def cmd(cmd):
     print(cmd)
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    process = subprocess.Popen(cmd,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.STDOUT,
+                               shell=True)
     (stdoutdata, stderrdata) = process.communicate()
     if stdoutdata is not None:
         print(stdoutdata)

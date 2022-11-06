@@ -1,8 +1,12 @@
-import os, shutil, hash_algo, package_extractor, urllib
+import os, shutil, urllib
+from . import hash_algo
+from . import package_extractor
 
 CACHE_DIR = '.srcdep'
 
+
 class UrlDepUpdater(object):
+
     @staticmethod
     def update(args, dir, dep):
         dest = os.path.join(dir, dep.PATH)
@@ -14,7 +18,9 @@ class UrlDepUpdater(object):
                 print("%s exists, skip" % dest)
                 return True
 
-        cache_file = os.path.join(dir, CACHE_DIR, dep.PATH.replace(os.path.sep, '_') + '.' + dep.URL_FORMAT)
+        cache_file = os.path.join(
+            dir, CACHE_DIR,
+            dep.PATH.replace(os.path.sep, '_') + '.' + dep.URL_FORMAT)
         if os.path.exists(cache_file) and not verify(cache_file, dep.URL_HASH):
             os.remove(cache_file)
         if not os.path.exists(cache_file):
@@ -33,11 +39,13 @@ class UrlDepUpdater(object):
         if dep.ROOT_DIR is not None:
             os.rename(os.path.join(extract_dir, dep.ROOT_DIR), dest)
 
+
 def verify(file, url_hashes):
     for url_hash in url_hashes:
         if not hash_algo.verify(file, url_hash.ALGORITHM, url_hash.HASH):
             return False
     return True
+
 
 def download(url, file):
     if not os.path.exists(os.path.dirname(file)):
@@ -47,7 +55,7 @@ def download(url, file):
     except:
         return False
     with open(file, 'wb') as local:
-        BLOCK_SIZE = 1024*1024
+        BLOCK_SIZE = 1024 * 1024
         while True:
             buffer = remote.read(BLOCK_SIZE)
             local.write(buffer)
