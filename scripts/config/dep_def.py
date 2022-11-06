@@ -5,6 +5,9 @@ GIT_REPOSITORY = 'GIT_REPOSITORY'
 GIT_TAG = 'GIT_TAG'
 URL = 'URL'
 URL_FORMAT = 'URL_FORMAT'
+TAR_GZ = 'tar.gz'
+TAR_BZ2 = 'tar.bz2'
+ZIP = 'zip'
 URL_HASH = 'URL_HASH'
 MD5 = 'MD5'
 SHA1 = 'SHA1'
@@ -24,7 +27,7 @@ def dict_to_object(dict):
 class Dep(object):
     PATH = None
     def __init__(self, path):
-        self.PATH = path
+        self.PATH = path.replace('/', os.path.sep).replace('\\', os.path.sep)
 
     @staticmethod
     def new(path, config):
@@ -64,6 +67,7 @@ class UrlDep(Dep):
                 ext_name = 'tar.' + filename_part[-1]
             else:
                 ext_name = filename_part[-1]
+            assert ext_name in [ TAR_GZ, TAR_BZ2, ZIP ], 'Supported formats are: %s, %s, %s' % (TAR_GZ, TAR_BZ2, ZIP)
             self.URL_FORMAT = ext_name
         if URL_HASH in config:
             for algo in config[URL_HASH]:

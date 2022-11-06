@@ -1,51 +1,51 @@
-import os, hash_algo, urllib, tarfile, zipfile
+import os, shutil, hash_algo, package_extractor, urllib
 
 CACHE_DIR = '.srcdep'
 
 class UrlDepUpdater(object):
     @staticmethod
     def update(args, dir, dep):
-        if os.path.exists(dep.PATH):
-            return
-        cache_file = os.path.join(dir, CACHE_DIR, dep.PATH)
-        if os.path.exists(cache_file):
-            print('File %s exists, verifying...' % cache_file)
-            if not verify(cache_file, dep.URL_HASH):
-                print('File %s verified error, re-download' % cache_file)
-                os.remove(cache_file)
+        dest = os.path.join(dir, dep.PATH)
+        if os.path.exists(dest):
+            if args.force:
+                print("%s exists, removing..." % dest)
+                shutil.rmtree(dest)
+            else:
+                print("%s exists, skip" % dest)
+                return True
+
+        cache_file = os.path.join(dir, CACHE_DIR, dep.PATH.replace(os.path.sep, '_') + '.' + dep.URL_FORMAT)
+        if os.path.exists(cache_file) and not verify(cache_file, dep.URL_HASH):
+            os.remove(cache_file)
         if not os.path.exists(cache_file):
-            download(dep.URL, cache_file)
-            print('File %s downloaded, verifying...' % cache_file)
+            print('Downloading %s ...' % dep.URL)
+            if not download(dep.URL, cache_file):
+                print('Download %s error' % dep.URL)
+                return False
             if not verify(cache_file, dep.URL_HASH):
                 print('File %s verified error, stop' % cache_file)
                 return False
-        extract_dir = dep.PATH
+
+        extract_dir = dest
         if dep.ROOT_DIR is not None:
-            extract_dir = os.path.dirname(dep.PATH)
-        if dep.URL_FORMAT == 'tar.gz':
-            with tarfile.open(cache_file, 'r:gz') as tar:
-                tar.extractall(extract_dir)
-        if dep.URL_FORMAT == 'tar.bz2':
-            with tarfile.open(cache_file, 'r:bz2') as tar:
-                tar.extractall(extract_dir)
-        if dep.URL_FORMAT == 'zip':
-            with zipfile.open(cache_file, 'r') as zip:
-                zip.extractall(extract_dir)
+            extract_dir = os.path.dirname(extract_dir)
+        package_extractor.extract(cache_file, dep.URL_FORMAT, extract_dir)
         if dep.ROOT_DIR is not None:
-            os.rename(os.path.join(extract_dir, dep.ROOT_DIR), dep.PATH)
+            os.rename(os.path.join(extract_dir, dep.ROOT_DIR), dest)
 
 def verify(file, url_hashes):
     for url_hash in url_hashes:
-        print('Verifying %s = %s...' % (url_hash.ALGORITHM, url_hash.HASH))
         if not hash_algo.verify(file, url_hash.ALGORITHM, url_hash.HASH):
             return False
     return True
 
 def download(url, file):
-    print('Downloading %s to %s ...' %(url, file))
     if not os.path.exists(os.path.dirname(file)):
         os.makedirs(os.path.dirname(file))
-    remote = urllib.urlopen(url)
+    try:
+        remote = urllib.urlopen(url)
+    except:
+        return False
     with open(file, 'wb') as local:
         BLOCK_SIZE = 1024*1024
         while True:

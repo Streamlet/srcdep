@@ -20,14 +20,14 @@ git clone this project to a local directory, and set it into PATH variable.
 
 ```yaml
 DEPS:
-  thirdparty/srcdep:
-    GIT_REPO: https://github.com/Streamlet/srcdep.git
+  thirdparty/gn_toolchain:
+    GIT_REPOSITORY: https://github.com/Streamlet/gn_toolchain.git
     GIT_TAG: master
 ```
 
 2. Run `srcdep update` at the root directory of your project.
 
-Then, this project, as a dependency, will be downloaded to thirdparty/srcdep.
+Then, gn_toolchain, as a dependency, will be downloaded to thirdparty/gn_toolchain.
 
 ## More Documents
 

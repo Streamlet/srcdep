@@ -1,17 +1,23 @@
-import os, subprocess
+import os, subprocess, shutil
 
 class GitDepUpdater(object):
     @staticmethod
     def update(args, dir, dep):
         dest = os.path.join(dir, dep.PATH)
         if os.path.exists(dest):
-            return
-        cmd('git clone %s %s' %(dep.GIT_REPO, dest))
+            if args.force:
+                print("%s exists, removing..." % dest)
+                shutil.rmtree(dest)
+            else:
+                print("%s exists, skip" % dest)
+                return True
+        if not cmd('git clone %s %s' %(dep.GIT_REPO, dest)):
+            return False
         os.chdir(dest)
-        cmd('git fetch')
-        cmd('git reset --hard')
-        cmd('git checkout %s --detach' % dep.GIT_TAG)
+        if not cmd('git checkout %s --detach' % dep.GIT_TAG):
+            return False
         os.chdir(dir)
+        return True
 
 
 def cmd(cmd):
@@ -22,4 +28,4 @@ def cmd(cmd):
         print(stdoutdata)
     if stderrdata is not None:
         print(stderrdata)
-    return process.wait()
+    return process.wait() == 0

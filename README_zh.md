@@ -20,14 +20,14 @@ git clone 本项目到本地，并将其路径设置到 PATH 中。
 
 ```yaml
 DEPS:
-  thirdparty/srcdep:
-    GIT_REPO: https://github.com/Streamlet/srcdep.git
+  thirdparty/gn_toolchain:
+    GIT_REPOSITORY: https://github.com/Streamlet/gn_toolchain.git
     GIT_TAG: master
 ```
 
 2. 在您项目根目录运行 `srcdep update`
 
-运行结束后，可以看到本项目作为依赖被下载到 thirdparty/srcdep 目录中。
+运行结束后，可以看到 gn_toolchain 作为依赖被下载到 thirdparty/gn_toolchain 目录中。
 
 ## 更多说明
 

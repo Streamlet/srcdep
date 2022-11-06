@@ -23,6 +23,7 @@ def main():
                     epilog = 'Powered by Streamlet Studio.')
     subparsers = parser.add_subparsers(help='commands for solving dependencies')
     update_parser = subparsers.add_parser('update', help='update dependencies')
+    update_parser.add_argument('--force', '-f', action='store_true', help='force update dependency. will delete the dependency directory and rebuild it.')
     update_parser.set_defaults(routin=CommandDispatcher.update)
     args = parser.parse_args()
     process_package(args, os.getcwd(), False)

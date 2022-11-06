@@ -17,11 +17,11 @@ DEPS:
     # If URL is not ended with file extension, package format should be specified by URL_FORMAT.
     # URL_FORMAT will override file extension at the end of URL.
     URL: package_url
+    # The root directory in archive file
+    # Once extracted, the files inside it will be moved to up-level directory
+    ROOT_DIR: root_dir_in_archive
     URL_FORMAT: tar.gz  
     URL_HASH:
       # Supported algorithms are MD5, SHA1, SHA224, SHA256, SHA384, SHA512
       # If more than one hash provided, all of them will be verified.
       SHA256: sha256_hash_of_the_package
-    # The root directory in archive file
-    # Once extracted, the files inside it will be moved to up-level directory
-    ROOT_DIR: root_dir_in_archive
