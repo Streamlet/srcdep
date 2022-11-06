@@ -16,7 +16,7 @@ git clone this project to a local directory, and set it into PATH variable.
 
 ## Getting Start
 
-1. Write a `DEPS.yaml` file at the root directory of your target project, with content as following:
+1. Write a `SRCDEP.yaml` file at the root directory of your target project, with content as following:
 
 ```yaml
 DEPS:
@@ -25,7 +25,7 @@ DEPS:
     GIT_TAG: master
 ```
 
-2. Run `srcdep` at the root directory of your project.
+2. Run `srcdep update` at the root directory of your project.
 
 Then, this project, as a dependency, will be downloaded to thirdparty/srcdep.
 
@@ -35,6 +35,6 @@ Then, this project, as a dependency, will be downloaded to thirdparty/srcdep.
 
 Please run `srcdep --help` to get the full document.
 
-### DEPS.yaml format
+### SRCDEP.yaml format
 
-Please refer to [DEPS.yaml](DEPS.yaml).
+Please refer to [SRCDEP.yaml](SRCDEP.yaml).

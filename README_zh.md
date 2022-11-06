@@ -16,7 +16,7 @@ git clone 本项目到本地，并将其路径设置到 PATH 中。
 
 ## 开始使用
 
-1. 在您的目标项目中写一个 `DEPS.yaml`，内容如下：
+1. 在您的目标项目中写一个 `SRCDEP.yaml`，内容如下：
 
 ```yaml
 DEPS:
@@ -25,7 +25,7 @@ DEPS:
     GIT_TAG: master
 ```
 
-2. 在您项目根目录运行 `srcdep`
+2. 在您项目根目录运行 `srcdep update`
 
 运行结束后，可以看到本项目作为依赖被下载到 thirdparty/srcdep 目录中。
 
@@ -35,6 +35,6 @@ DEPS:
 
 请运行 `srcdep --help` 查看。
 
-### DEPS.yaml 格式
+### SRCDEP.yaml 格式
 
-见 [DEPS.yaml](DEPS.yaml)。
+见 [SRCDEP.yaml](SRCDEP.yaml)。
