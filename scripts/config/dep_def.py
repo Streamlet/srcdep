@@ -29,8 +29,6 @@ def dict_to_object(dict):
 
 
 class Dep(object):
-    PATH = None
-
     def __init__(self, path):
         self.PATH = path.replace('/', os.path.sep).replace('\\', os.path.sep)
 
@@ -45,9 +43,6 @@ class Dep(object):
 
 
 class GitDep(Dep):
-    GIT_REPO = None
-    GIT_TAG = None
-
     def __init__(self, path, config):
         super(GitDep, self).__init__(path)
         assert GIT_REPOSITORY in config
@@ -57,12 +52,12 @@ class GitDep(Dep):
 
 
 class UrlDep(Dep):
-    URL = None
-    URL_FORMAT = None
-    URL_HASH = []
-    ROOT_DIR = None
-
     def __init__(self, path, config):
+        self.URL = None
+        self.URL_FORMAT = None
+        self.URL_HASH = []
+        self.ROOT_DIR = None
+
         super(UrlDep, self).__init__(path)
         assert URL in config
         self.URL = config[URL]
@@ -86,9 +81,6 @@ class UrlDep(Dep):
 
 
 class UrlHash(object):
-    ALGORITHM = None
-    HASH = None
-
     def __init__(self, algo, hash):
         self.ALGORITHM = algo
         self.HASH = hash
