@@ -61,3 +61,4 @@ def download(url, file):
             local.write(buffer)
             if len(buffer) < BLOCK_SIZE:
                 break
+    return True
