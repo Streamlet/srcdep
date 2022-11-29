@@ -30,8 +30,9 @@ def cmd(cmd):
                                shell=True)
     encoding = locale.getpreferredencoding(False)
     (stdoutdata, stderrdata) = process.communicate()
+    encoding = locale.getpreferredencoding(False)
     if stdoutdata is not None:
-        print(stdoutdata.decode())
+        print(stdoutdata.decode(encoding))
     if stderrdata is not None:
-        print(stderrdata.decode())
+        print(stderrdata.decode(encoding))
     return process.wait() == 0

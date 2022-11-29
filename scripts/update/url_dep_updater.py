@@ -1,6 +1,10 @@
-import os, shutil, urllib
+import os, sys, shutil
 from . import hash_algo
 from . import package_extractor
+if sys.version >= '3':
+    import urllib.request as urllib
+else:
+    import urllib
 
 CACHE_DIR = '.srcdep'
 
@@ -52,7 +56,8 @@ def download(url, file):
         os.makedirs(os.path.dirname(file))
     try:
         remote = urllib.urlopen(url)
-    except:
+    except Exception as e:
+        print(e)
         return False
     with open(file, 'wb') as local:
         BLOCK_SIZE = 1024 * 1024
