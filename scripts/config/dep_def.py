@@ -1,7 +1,7 @@
 import os, sys
 
 DEPS = 'DEPS'
-GIT_REPOSITORY = 'GIT_REPOSITORY'
+GIT_REPO = 'GIT_REPO'
 GIT_TAG = 'GIT_TAG'
 URL = 'URL'
 URL_FORMAT = 'URL_FORMAT'
@@ -34,20 +34,20 @@ class Dep(object):
 
     @staticmethod
     def new(path, config):
-        if GIT_REPOSITORY in config:
+        if GIT_REPO in config:
             return GitDep(path, config)
         if URL in config:
             return UrlDep(path, config)
         assert False, 'Unsupported dependent type. You MUST specify "%s" or "%s".' % (
-            GIT_REPOSITORY, URL)
+            GIT_REPO, URL)
 
 
 class GitDep(Dep):
     def __init__(self, path, config):
         super(GitDep, self).__init__(path)
-        assert GIT_REPOSITORY in config
+        assert GIT_REPO in config
         assert GIT_TAG in config, '"%s" MUST be specified in a git dependent'
-        self.GIT_REPO = config[GIT_REPOSITORY]
+        self.GIT_REPO = config[GIT_REPO]
         self.GIT_TAG = config[GIT_TAG]
 
 

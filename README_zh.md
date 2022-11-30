@@ -21,7 +21,7 @@ git clone 本项目到本地，并将其路径设置到 PATH 中。
 ```yaml
 DEPS:
   thirdparty/gn_toolchain:
-    GIT_REPOSITORY: https://github.com/Streamlet/gn_toolchain.git
+    GIT_REPO: https://github.com/Streamlet/gn_toolchain.git
     GIT_TAG: master
 ```
 

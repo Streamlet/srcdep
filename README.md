@@ -21,7 +21,7 @@ git clone this project to a local directory, and set it into PATH variable.
 ```yaml
 DEPS:
   thirdparty/gn_toolchain:
-    GIT_REPOSITORY: https://github.com/Streamlet/gn_toolchain.git
+    GIT_REPO: https://github.com/Streamlet/gn_toolchain.git
     GIT_TAG: master
 ```
 

@@ -8,7 +8,7 @@
 DEPS:
   path/to/local/directory:
     # For git repository dependency, GET_REPO and GIT_TAG are needed
-    GIT_REPOSITORY: url_of_git_repo
+    GIT_REPO: url_of_git_repo
     GIT_TAG: git_tag_or_branch_or_commit
   # Each dependency will be fetched to a local directory.
   # The path of local directory is used as the identifier of the dependency
