@@ -1,4 +1,4 @@
-import os, subprocess, shutil
+import os, subprocess, shutil, locale
 
 
 class GitDepUpdater(object):
@@ -28,9 +28,10 @@ def cmd(cmd):
                                stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT,
                                shell=True)
+    encoding = locale.getpreferredencoding(False)
     (stdoutdata, stderrdata) = process.communicate()
     if stdoutdata is not None:
-        print(stdoutdata)
+        print(stdoutdata.decode())
     if stderrdata is not None:
-        print(stderrdata)
+        print(stderrdata.decode())
     return process.wait() == 0
