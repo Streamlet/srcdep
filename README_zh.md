@@ -25,7 +25,7 @@ DEPS:
     GIT_TAG: master
 ```
 
-2. 在您项目根目录运行 `srcdep update`
+2. 在您项目根目录运行 `srcdep`
 
 运行结束后，可以看到 gn_toolchain 作为依赖被下载到 thirdparty/gn_toolchain 目录中。
 

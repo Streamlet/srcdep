@@ -1,7 +1,7 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-import os, argparse, config, update
+import os, sys, argparse, config, update
 
 
 class CommandDispatcher(object):
@@ -20,22 +20,27 @@ def process_package(args, dir, optional):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        prog='srcdep',
-        description='A simple, source code based dependency management tool.',
-        epilog='Powered by Streamlet Studio.')
-    subparsers = parser.add_subparsers(
-        help='commands for solving dependencies')
-    update_parser = subparsers.add_parser('update', help='update dependencies')
-    update_parser.add_argument(
-        '--force',
-        '-f',
-        action='store_true',
-        help=
-        'force update dependency. will delete the dependency directory and rebuild it.'
-    )
-    update_parser.set_defaults(routin=CommandDispatcher.update)
-    args = parser.parse_args()
+    if len(sys.argv) > 1:
+        parser = argparse.ArgumentParser(
+            prog='srcdep',
+            description='A simple, source code based dependency management tool.',
+            epilog='Powered by Streamlet Studio.')
+        subparsers = parser.add_subparsers(
+            help='commands for solving dependencies')
+        update_parser = subparsers.add_parser('update', help='update dependencies')
+        update_parser.add_argument(
+            '--force',
+            '-f',
+            action='store_true',
+            help=
+            'force update dependency. will delete the dependency directory and rebuild it.'
+        )
+        update_parser.set_defaults(routin=CommandDispatcher.update)
+        args = parser.parse_args()
+    else:
+        args = argparse.Namespace()
+        args.routin = CommandDispatcher.update
+        args.force = False
     process_package(args, os.getcwd(), False)
 
 

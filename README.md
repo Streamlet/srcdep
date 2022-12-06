@@ -25,7 +25,7 @@ DEPS:
     GIT_TAG: master
 ```
 
-2. Run `srcdep update` at the root directory of your project.
+2. Run `srcdep` at the root directory of your project.
 
 Then, gn_toolchain, as a dependency, will be downloaded to thirdparty/gn_toolchain.
 
