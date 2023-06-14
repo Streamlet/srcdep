@@ -13,18 +13,10 @@ class UrlDepUpdater(object):
 
     @staticmethod
     def update(args, dir, dep):
-        dest = os.path.join(dir, dep.PATH)
-        if os.path.exists(dest):
-            if args.force:
-                print("%s exists, removing..." % dest)
-                shutil.rmtree(dest)
-            else:
-                print("%s exists, skip" % dest)
-                return True
-
         cache_file = os.path.join(
             dir, CACHE_DIR,
             dep.PATH.replace(os.path.sep, '_') + '.' + dep.URL_FORMAT)
+        file_changed = False
         if os.path.exists(cache_file) and not verify(cache_file, dep.URL_HASH):
             os.remove(cache_file)
         if not os.path.exists(cache_file):
@@ -35,6 +27,16 @@ class UrlDepUpdater(object):
             if not verify(cache_file, dep.URL_HASH):
                 print('File %s verified error, stop' % cache_file)
                 return False
+            file_changed = True
+
+        dest = os.path.join(dir, dep.PATH)
+        if os.path.exists(dest):
+            if args.force or file_changed:
+                print("%s exists, removing..." % dest)
+                shutil.rmtree(dest)
+            else:
+                print("%s exists, skip" % dest)
+                return True
 
         extract_dir = dest
         if dep.ROOT_DIR is not None:
