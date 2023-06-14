@@ -20,7 +20,7 @@ class UrlDepUpdater(object):
         if os.path.exists(cache_file) and not verify(cache_file, dep.URL_HASH):
             os.remove(cache_file)
         if not os.path.exists(cache_file):
-            print('Downloading %s ...' % dep.URL)
+            # print('Downloading %s ...' % dep.URL)
             if not download(dep.URL, cache_file):
                 print('Download %s error' % dep.URL)
                 return False
@@ -32,10 +32,10 @@ class UrlDepUpdater(object):
         dest = os.path.join(dir, dep.PATH)
         if os.path.exists(dest):
             if args.force or file_changed:
-                print("%s exists, removing..." % dest)
+                # print("%s exists, removing..." % dest)
                 shutil.rmtree(dest)
             else:
-                print("%s exists, skip" % dest)
+                # print("%s exists, skip" % dest)
                 return True
 
         extract_dir = dest

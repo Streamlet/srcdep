@@ -16,7 +16,7 @@ def process_package(args, dir, optional):
     if deps is not None:
         args.routin(args, dir, deps)
         for dep in deps:
-            process_package(args, os.path.join(dep.PATH), True)
+            process_package(args, os.path.join(dir, dep.PATH), True)
 
 
 def main():

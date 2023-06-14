@@ -9,10 +9,10 @@ class GitDepUpdater(object):
         cloned = True
         if os.path.exists(dest):
             if args.force:
-                print("%s exists, removing..." % dest)
+                # print("%s exists, removing..." % dest)
                 shutil.rmtree(dest)
             else:
-                print("%s exists" % dest)
+                # print("%s exists" % dest)
                 cloned = False
         if cloned:
             if not cmd('git clone %s %s' % (dep.GIT_REPO, dest)):
@@ -33,7 +33,7 @@ class GitDepUpdater(object):
 
 
 def cmd(cmd):
-    print(cmd)
+    # print(cmd)
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT,
@@ -41,8 +41,8 @@ def cmd(cmd):
     encoding = locale.getpreferredencoding(False)
     (stdoutdata, stderrdata) = process.communicate()
     encoding = locale.getpreferredencoding(False)
-    if stdoutdata is not None:
-        print(stdoutdata.decode(encoding))
-    if stderrdata is not None:
-        print(stderrdata.decode(encoding))
+    # if stdoutdata is not None:
+    #     print(stdoutdata.decode(encoding))
+    # if stderrdata is not None:
+    #     print(stderrdata.decode(encoding))
     return process.wait() == 0
