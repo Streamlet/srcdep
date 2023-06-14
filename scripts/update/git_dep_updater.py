@@ -18,7 +18,7 @@ class GitDepUpdater(object):
         os.chdir(dest)
         if not cmd('git checkout %s --detach' % dep.GIT_TAG):
             return False
-        os.chdir(dir)
+        os.chdir('..')
         return True
 
 
