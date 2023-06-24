@@ -4,10 +4,11 @@
 # to help those who don't have srcdep environment, to fetch dependencies conveniently.
 
 BASEDIR=$(dirname "$0")
-
-mkdir /p "$BASEDIR/.srcdep"
-if [ ! -f "$BASEDIR/.srcdep/repo" ]; then
+if [ ! -d "$BASEDIR/.srcdep" ]; then
+    mkdir -p "$BASEDIR/.srcdep"
+fi
+if [ ! -d "$BASEDIR/.srcdep/repo" ]; then
     git clone https://github.com/Streamlet/srcdep.git "$BASEDIR/.srcdep/repo"
 fi
 
-source "$BASEDIR/.srcdep/repo/srcdep"
+exec "$BASEDIR/.srcdep/repo/srcdep"
