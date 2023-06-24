@@ -29,6 +29,10 @@ DEPS:
 
 Then, gn_toolchain, as a dependency, will be downloaded to thirdparty/gn_toolchain.
 
+## Redistributable scripts
+
+The two script files, fetch_deps and fetch_deps.bat, can be redistributed to your source code root, to help those who don't have srcdep environment, to fetch dependencies conveniently.
+
 ## More Documents
 
 ### Command Line

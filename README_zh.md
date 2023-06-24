@@ -29,6 +29,10 @@ DEPS:
 
 运行结束后，可以看到 gn_toolchain 作为依赖被下载到 thirdparty/gn_toolchain 目录中。
 
+## 可再发行的脚本
+
+根目录下有两个脚本文件 fetch_deps 和 fetch_deps.bat，它们可以被发布到您的代码根目录，帮助没有 srcdep 环境的使用者更加方便地下载依赖包。
+
 ## 更多说明
 
 ### 命令行参数
