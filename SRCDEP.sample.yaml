@@ -1,27 +1,26 @@
 # SRCDEP.yaml
-# processed by https://github.com/Streamlet/srcdep, A simple, source code based dependency management tool.
+# processed by https://github.com/Streamlet/srcdep.git, A simple, source code based dependency management tool.
 
 # This file is full sample of SRCDEP.yaml, and can be used as template file.
 # All keywords are in uppercase
 
 # Root element is fixed as 'DEPS'
 DEPS:
-  path/to/local/directory:
+  thirdparty/zlib_from_git:
     # For git repository dependency, GET_REPO and GIT_TAG are needed
-    GIT_REPO: url_of_git_repo
-    GIT_TAG: git_tag_or_branch_or_commit
+    GIT_REPO: https://github.com/madler/zlib.git
+    GIT_TAG: v1.2.13
   # Each dependency will be fetched to a local directory.
   # The path of local directory is used as the identifier of the dependency
-  path/to/another/directory:
+  thirdparty/zlib_from_url:
     # For ordinary url dependency, URL is required, URL_FORMAT and URL_HASH are optional
     # If URL is not ended with file extension, package format should be specified by URL_FORMAT.
     # URL_FORMAT will override file extension at the end of URL.
-    URL: package_url
+    URL: https://www.zlib.net/zlib-1.2.13.tar.gz
     # The root directory in archive file
     # Once extracted, the files inside it will be moved to up-level directory
-    ROOT_DIR: root_dir_in_archive
-    URL_FORMAT: tar.gz  
+    ROOT_DIR: zlib-1.2.13
     URL_HASH:
       # Supported algorithms are MD5, SHA1, SHA224, SHA256, SHA384, SHA512
       # If more than one hash provided, all of them will be verified.
-      SHA256: sha256_hash_of_the_package
+      SHA256: b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30

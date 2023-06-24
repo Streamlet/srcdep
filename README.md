@@ -16,18 +16,11 @@ git clone this project to a local directory, and set it into PATH variable.
 
 ## Getting Start
 
-1. Write a `SRCDEP.yaml` file at the root directory of your target project, with content as following:
+1. Copy SRCDEP.sample.yaml to root directory of your source code and rename to `SRCDEP.yaml`.
 
-```yaml
-DEPS:
-  thirdparty/gn_toolchain:
-    GIT_REPO: https://github.com/Streamlet/gn_toolchain.git
-    GIT_TAG: master
-```
+2. Run `srcdep` at root directory of your source code.
 
-2. Run `srcdep` at the root directory of your project.
-
-Then, gn_toolchain, as a dependency, will be downloaded to thirdparty/gn_toolchain.
+Then thirdparty/zlib_from_git and thirdparty/zlib_from_url will be fetched.
 
 ## Redistributable scripts
 

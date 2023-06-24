@@ -16,18 +16,11 @@ git clone 本项目到本地，并将其路径设置到 PATH 中。
 
 ## 开始使用
 
-1. 在您的目标项目中写一个 `SRCDEP.yaml`，内容如下：
+1. 复制 SRCDEP.sample.yaml 到您的源代码根目录并重命名为 `SRCDEP.yaml`。
 
-```yaml
-DEPS:
-  thirdparty/gn_toolchain:
-    GIT_REPO: https://github.com/Streamlet/gn_toolchain.git
-    GIT_TAG: master
-```
+2. 在您源代码根目录运行 `srcdep`
 
-2. 在您项目根目录运行 `srcdep`
-
-运行结束后，可以看到 gn_toolchain 作为依赖被下载到 thirdparty/gn_toolchain 目录中。
+运行结束后，可以看到 thirdparty/zlib_from_git 和 thirdparty/zlib_from_url 被成功下载。
 
 ## 可再发行的脚本
 
