@@ -24,6 +24,8 @@ class GitDepUpdater(object):
             if cmd('git show-ref -q --verify refs/heads/%s' % dep.GIT_TAG):
                 if not cmd('git checkout HEAD --detach'):
                     return False
+                if not cmd('git reset --hard'):
+                    return False
                 if not cmd('git branch -D %s' % dep.GIT_TAG):
                     return False
         if not cmd('git checkout %s' % dep.GIT_TAG):
