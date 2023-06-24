@@ -3,7 +3,9 @@
 
 @Echo Off
 
-MkDir "%~dp0.srcdep"
+If Not Exist "%~dp0.srcdep" (
+    MkDir "%~dp0.srcdep"
+)
 If Not Exist "%~dp0.srcdep\repo" (
     git clone https://github.com/Streamlet/srcdep.git "%~dp0.srcdep\repo"
 )
