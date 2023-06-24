@@ -1,3 +1,3 @@
 @Echo Off
 
-python %~dp0scripts\srcdep.py %*
+python "%~dp0scripts\srcdep.py" %*

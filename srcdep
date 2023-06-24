@@ -1,4 +1,4 @@
 #!/bin/sh
 
 BASEDIR=$(dirname "$0")
-python $BASEDIR/scripts/srcdep.py "$@"
+python "$BASEDIR/scripts/srcdep.py" "$@"
