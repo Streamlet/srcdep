@@ -1,5 +1,5 @@
 :: This file can be redistributed to your source code root,
-:: to help those who don't set srcdep to PATH variables.
+:: to help those who don't have srcdep environment, to fetch dependencies conveniently.
 
 @Echo Off
 
