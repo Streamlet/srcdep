@@ -1,4 +1,5 @@
-import hashlib, config.dep_def as dep_def
+import hashlib
+import config.dep_def as dep_def
 
 ALGORITHM_MAP = {
     dep_def.MD5: hashlib.md5,

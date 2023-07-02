@@ -1,4 +1,7 @@
-import os, subprocess, shutil, locale
+import os
+import subprocess
+import shutil
+import locale
 
 
 class GitDepUpdater(object):
@@ -38,7 +41,7 @@ def cmd(cmd):
     # print(cmd)
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
-                               stderr=subprocess.STDOUT,
+                               stderr=subprocess.PIPE,
                                shell=True)
     encoding = locale.getpreferredencoding(False)
     (stdoutdata, stderrdata) = process.communicate()

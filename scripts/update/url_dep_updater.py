@@ -1,4 +1,6 @@
-import os, sys, shutil
+import os
+import sys
+import shutil
 from . import hash_algo
 from . import package_extractor
 if sys.version >= '3':
@@ -44,6 +46,7 @@ class UrlDepUpdater(object):
         package_extractor.extract(cache_file, dep.URL_FORMAT, extract_dir)
         if dep.ROOT_DIR is not None:
             os.rename(os.path.join(extract_dir, dep.ROOT_DIR), dest)
+        return True
 
 
 def verify(file, url_hashes):

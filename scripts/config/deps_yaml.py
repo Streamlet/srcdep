@@ -1,4 +1,6 @@
-import os, yaml, config.dep_def as dep_def
+import os
+import yaml
+import config.dep_def as dep_def
 
 DEPS_YAML_FILE = 'SRCDEP.yaml'
 

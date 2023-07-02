@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 
 DEPS = 'DEPS'
 GIT_REPO = 'GIT_REPO'
@@ -10,7 +11,8 @@ TAR_BZ2 = 'tar.bz2'
 if sys.version >= '3':
     TAR_XZ = 'tar.xz'
 ZIP = 'zip'
-SUPPORTED_FORMATS = (TAR_GZ, TAR_BZ2, TAR_XZ, ZIP) if sys.version >= '3' else (TAR_GZ, TAR_BZ2, ZIP)
+SUPPORTED_FORMATS = (TAR_GZ, TAR_BZ2, TAR_XZ,
+                     ZIP) if sys.version >= '3' else (TAR_GZ, TAR_BZ2, ZIP)
 URL_HASH = 'URL_HASH'
 MD5 = 'MD5'
 SHA1 = 'SHA1'

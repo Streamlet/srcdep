@@ -1,4 +1,7 @@
-import sys, config.dep_def as dep_def, tarfile, zipfile
+import sys
+import config.dep_def as dep_def
+import tarfile
+import zipfile
 
 
 def extract(file, format, dest):
