@@ -17,12 +17,14 @@ class CommandDispatcher(object):
 
 def process_package(args, dir, optional):
     deps = config.load(dir, optional)
-    if deps is not None:
-        if not args.routin(args, dir, deps):
+    if deps is None:
+        return True
+    if not args.routin(args, dir, deps):
+        return False
+    for dep in deps:
+        if not process_package(args, os.path.join(dir, dep.PATH), True):
             return False
-        for dep in deps:
-            if not process_package(args, os.path.join(dir, dep.PATH), True):
-                return False
+    return True
 
 
 def main():
