@@ -9,18 +9,18 @@ class GitDepUpdater(object):
     @staticmethod
     def update(args, dir, dep):
         dest = os.path.join(dir, dep.PATH)
-        cloned = True
+        existed = False
         if os.path.exists(dest):
-            if args.force:
-                shutil.rmtree(dest)
+            if os.path.exists(os.path.join(dest, '.git')) and not args.force:
+                existed = True
             else:
-                cloned = False
-        if cloned:
+                shutil.rmtree(dest)
+        if not existed:
             if not cmd('git clone %s %s' % (dep.GIT_REPO, dest)):
                 print('Failed to clone %s to %s' % (dep.GIT_REPO, dest))
                 return False
         os.chdir(dest)
-        if not cloned:
+        if existed:
             if not cmd('git fetch -p -t && git fetch -p -P && echo Synced remote branches and tags'):
                 print('Failed to sync remote branches and tags')
                 return False
