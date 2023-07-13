@@ -72,7 +72,8 @@ class UrlDep(Dep):
                 ext_name = 'tar.' + filename_part[-1]
             else:
                 ext_name = filename_part[-1]
-            assert ext_name in SUPPORTED_FORMATS, 'Supported formats are: %s, %s, %s' % SUPPORTED_FORMATS
+            assert ext_name in SUPPORTED_FORMATS, 'File format "%s" not supported, expects %s' % (
+                ext_name, ', '.join(SUPPORTED_FORMATS))
             self.URL_FORMAT = ext_name
         if URL_HASH in config:
             for algo in config[URL_HASH]:
