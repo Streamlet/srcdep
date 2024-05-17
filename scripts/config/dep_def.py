@@ -31,6 +31,12 @@ def dict_to_object(dict):
     return deps
 
 
+def platform_config(config):
+    if isinstance(config, dict) and sys.platform in config:
+        return config[sys.platform]
+    return config
+
+
 class Dep(object):
     def __init__(self, path):
         self.PATH = path.replace('/', os.path.sep).replace('\\', os.path.sep)
@@ -50,8 +56,10 @@ class GitDep(Dep):
         super(GitDep, self).__init__(path)
         assert GIT_REPO in config
         assert GIT_TAG in config, '"%s" MUST be specified in a git dependent'
-        self.GIT_REPO = config[GIT_REPO]
-        self.GIT_TAG = config[GIT_TAG]
+        self.GIT_REPO = platform_config(config[GIT_REPO])
+        assert isinstance(self.GIT_REPO, str), 'GIT_REPO MUST be string'
+        self.GIT_TAG = platform_config(config[GIT_TAG])
+        assert isinstance(self.GIT_TAG, str), 'GIT_TAG MUST be string'
 
 
 class UrlDep(Dep):
@@ -63,9 +71,10 @@ class UrlDep(Dep):
 
         super(UrlDep, self).__init__(path)
         assert URL in config
-        self.URL = config[URL]
+        self.URL = platform_config(config[URL])
+        assert isinstance(self.URL, str), 'URL MUST be string'
         if URL_FORMAT in config:
-            self.URL_FORMAT = config[URL_FORMAT]
+            self.URL_FORMAT = platform_config(config[URL_FORMAT])
         else:
             filename_part = os.path.basename(self.URL).split('.')
             if len(filename_part) >= 2 and filename_part[-2] == 'tar':
@@ -75,14 +84,18 @@ class UrlDep(Dep):
             assert ext_name in SUPPORTED_FORMATS, 'File format "%s" not supported, expects %s' % (
                 ext_name, ', '.join(SUPPORTED_FORMATS))
             self.URL_FORMAT = ext_name
+        assert isinstance(self.URL_FORMAT, str), 'URL_FORMAT MUST be string'
         if URL_HASH in config:
             for algo in config[URL_HASH]:
-                self.URL_HASH.append(UrlHash(algo, config[URL_HASH][algo]))
+                self.URL_HASH.append(
+                    UrlHash(algo, platform_config(config[URL_HASH][algo])))
         if ROOT_DIR in config:
-            self.ROOT_DIR = config[ROOT_DIR]
+            self.ROOT_DIR = platform_config(config[ROOT_DIR])
+            assert isinstance(self.ROOT_DIR, str), 'ROOT_DIR MUST be string'
 
 
 class UrlHash(object):
     def __init__(self, algo, hash):
         self.ALGORITHM = algo
         self.HASH = hash
+        assert isinstance(self.HASH, str), 'URL_HASH value MUST be string'
