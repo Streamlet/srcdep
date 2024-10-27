@@ -40,6 +40,7 @@ def platform_config(config):
 class Dep(object):
     def __init__(self, path):
         self.PATH = path.replace('/', os.path.sep).replace('\\', os.path.sep)
+        self.PROJECT_DIR = None
 
     @staticmethod
     def new(path, config):
@@ -50,16 +51,24 @@ class Dep(object):
         assert False, 'Unsupported dependent type. You MUST specify "%s" or "%s".' % (
             GIT_REPO, URL)
 
+    def name(self):
+        return os.path.basename(self.PATH)
 
 class GitDep(Dep):
     def __init__(self, path, config):
-        super(GitDep, self).__init__(path)
+        super().__init__(path)
         assert GIT_REPO in config
         assert GIT_TAG in config, '"%s" MUST be specified in a git dependent'
         self.GIT_REPO = platform_config(config[GIT_REPO])
         assert isinstance(self.GIT_REPO, str), 'GIT_REPO MUST be string'
         self.GIT_TAG = platform_config(config[GIT_TAG])
         assert isinstance(self.GIT_TAG, str), 'GIT_TAG MUST be string'
+
+    def name(self):
+        return super().name()
+
+    def version(self):
+        return self.GIT_TAG
 
 
 class UrlDep(Dep):
@@ -69,7 +78,7 @@ class UrlDep(Dep):
         self.URL_HASH = []
         self.ROOT_DIR = None
 
-        super(UrlDep, self).__init__(path)
+        super().__init__(path)
         assert URL in config
         self.URL = platform_config(config[URL])
         assert isinstance(self.URL, str), 'URL MUST be string'
@@ -93,6 +102,11 @@ class UrlDep(Dep):
             self.ROOT_DIR = platform_config(config[ROOT_DIR])
             assert isinstance(self.ROOT_DIR, str), 'ROOT_DIR MUST be string'
 
+    def name(self):
+        return super().name()
+
+    def version(self):
+        return self.URL
 
 class UrlHash(object):
     def __init__(self, algo, hash):
