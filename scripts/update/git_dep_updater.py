@@ -21,7 +21,7 @@ class GitDepUpdater(object):
                 return False
         os.chdir(dest)
         if existed:
-            if not cmd('git fetch -p -t && git fetch -p -P && echo Synced remote branches and tags'):
+            if not cmd('git fetch -p -f -t && git fetch -p -f -P && echo Synced remote branches and tags'):
                 print('Failed to sync remote branches and tags')
                 return False
             if cmd('git show-ref -q --verify refs/heads/%s' % dep.GIT_TAG):
